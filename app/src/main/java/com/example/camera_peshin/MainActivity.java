@@ -13,11 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.camera_peshin.domains.callbacks.OnTabClickListner;
-
 public class MainActivity extends AppCompatActivity {
 
-    // Твой токен из Swagger
     public static String TOKEN = "d8f8811a-2a30-4eb4-875c-ed8783d4657f";
     public static MainActivity init;
     public Fragment openFragment;
@@ -30,11 +27,13 @@ public class MainActivity extends AppCompatActivity {
         init = this;
         context = this;
 
-        // Сразу открываем экран создания продукта
-        openFragment = new ProductFragment();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.content, openFragment)
-                .commit();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        NavigationMenu menu = new NavigationMenu(this, MenuItemSelect);
+        ft.add(R.id.menu_navigation, menu);
+        ft.commit();
+
+        // Открываем стартовый экран (Добавление)
+        MenuItemSelect.onTabClick(-1);
     }
 
     public OnTabClickListner MenuItemSelect = new OnTabClickListner() {
